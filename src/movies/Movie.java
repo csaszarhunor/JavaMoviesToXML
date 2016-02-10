@@ -1,63 +1,78 @@
 package movies;
 import java.util.List;
 
-public class Movie {
+public class Movie extends Product implements Buyable{
 
-	String title;
-	Genre genre;
-	long duration;
-	double rate;
-	List<Person> cast;
+	private final String ID = IdGenerator.generate(this);
+	private Genre genre;
+	private long duration;
+	private double rate;
+	private List<Person> cast;
+	private int price;
 	
-	public Movie(String startTitle, Genre startGenre, long startDuration,
-			double startRate, List<Person> startCast){
-		title = startTitle;
-		genre = startGenre;
-		duration = startDuration;
-		rate = startRate;
-		cast = startCast;
+	public Movie(String title, Genre genre, long duration,
+			double rate, List<Person> cast, int price){
+		this.title = title;
+		this.genre = genre;
+		this.duration = duration;
+		this.rate = rate;
+		this.cast = cast;
+		this.price = price;
 	}
 	
-	String getTitle(){
-		return this.title;
+	public String getID() {
+		return ID;
 	}
-	
-	void setTitle(String newTitle){
-		this.title = newTitle;
+
+	public String getTitle() {
+		return title;
 	}
-	
-	Genre getGenre(){
-		return this.genre;
+
+	public void setTitle(String title) {
+		this.title = title;
 	}
-	
-	void setGenre(Genre newGenre){
-		this.genre = newGenre;
+
+	public Genre getGenre() {
+		return genre;
 	}
-	
-	long getDuration(){
-		return this.duration;
+
+	public void setGenre(Genre genre) {
+		this.genre = genre;
 	}
-	
-	void setDuration(long newDuration){
-		this.duration = newDuration;
+
+	public long getDuration() {
+		return duration;
 	}
-	
-	double getRate(){
-		return this.rate;
+
+	public void setDuration(long duration) {
+		this.duration = duration;
 	}
-	
-	void setRate(double newRate){
-		this.rate = newRate;
+
+	public double getRate() {
+		return rate;
 	}
-	
-	List<Person> getCast(){
-		return this.cast;
+
+	public void setRate(double rate) {
+		this.rate = rate;
 	}
-	
-	void setCast(List<Person> newCast){
-		this.cast = newCast;
+
+	public List<Person> getCast() {
+		return cast;
 	}
-	
+
+	public void setCast(List<Person> cast) {
+		this.cast = cast;
+	}
+
+	@Override
+	public int getPrice() {
+		return price;
+	}
+
+	public void setPrice(int price) {
+		this.price = price;
+	}
+
 	String toXMLString(){
 		String titleTag = Tool.toXMLTag("title", this.title);
 		String genreTag = Tool.toXMLTag("genre", this.genre.toString());
@@ -74,4 +89,24 @@ public class Movie {
 				durationTag, rateTag, castTag));
 		return movieTag;
 	}
+
+
+	@Override
+	public long getInvestment() {
+		long investment = 0;
+		for (Person person : cast) {
+			investment += person.getSalary();
+		}
+		return investment;
+	}
+	
+	/*
+	@Override
+	public boolean equals(Object obj) {
+		Movie movie = (Movie) obj;
+		return title.equals(movie.title) && 
+				((cast == null && movie.cast == null) || cast.equals(movie.cast));
+	}
+	*/
+	
 }

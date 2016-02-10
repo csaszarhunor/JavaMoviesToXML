@@ -2,70 +2,66 @@ package movies;
 
 public class Person {
 	
-	String firstName;
-	String lastName;
-	Gender gender;
-	boolean hasOscar;
-	boolean hasGoldenGlobe;
+	private String firstName;
+	private String lastName;
+	private Gender gender;
+	private int salary;
 	
-	public Person(String startFirstName, String startLastName, Gender startGender,
-			boolean startHasOscar, boolean startHasGoldenGlobe){
-		firstName = startFirstName;
-		lastName = startLastName;
-		gender = startGender;
-		hasOscar = startHasOscar;
-		hasGoldenGlobe = startHasGoldenGlobe;
+	public Person(String firstName, String lastName, Gender gender,
+			int salary){
+		this.firstName = firstName;
+		this.lastName = lastName;
+		this.gender = gender;
+		this.salary = salary;
 	}
 	
-	String getFirstName(){
-		return this.firstName;
-	}
 	
-	void setFirstName(String newFirstName){
-		this.firstName = newFirstName;
+	public String getFirstName() {
+		return firstName;
 	}
-	
-	String getLastName(){
-		return this.lastName;
+
+
+	public void setFirstName(String firstName) {
+		this.firstName = firstName;
 	}
-	
-	void setLastName(String newLastName){
-		this.lastName = newLastName;
+
+
+	public String getLastName() {
+		return lastName;
 	}
-	
-	Gender getGender(){
-		return this.gender;
+
+
+	public void setLastName(String lastName) {
+		this.lastName = lastName;
 	}
-	
-	void setGender(Gender newGender){
-		this.gender = newGender;
+
+
+	public Gender getGender() {
+		return gender;
 	}
-	
-	boolean isHasOscar(){
-		return this.hasOscar;
+
+
+	public void setGender(Gender gender) {
+		this.gender = gender;
 	}
+
 	
-	void setHasOscar(boolean newHasOscar){
-		this.hasGoldenGlobe = newHasOscar;
+	public int getSalary() {
+		return salary;
 	}
-	
-	boolean isHasGoldenGlobe(){
-		return this.hasGoldenGlobe;
+
+
+	public void setSalary(int salary) {
+		this.salary = salary;
 	}
-	
-	void setHasGoldenGlobe(boolean newHasGoldenGlobe){
-		this.hasGoldenGlobe = newHasGoldenGlobe;
-	}
-	
+
 	String toXMLString(){
 		String firstNameTag = Tool.toXMLTag("firstName", this.firstName);
 		String lastNameTag = Tool.toXMLTag("lastName", this.lastName);
 		String genderTag = Tool.toXMLTag("gender", this.gender.toString());
-		String hasOscarTag = Tool.toXMLTag("hasOscar", String.valueOf(this.hasOscar));
-		String hasGoldenGlobeTag = Tool.toXMLTag("hasGoldenGlobe", String.valueOf(this.hasGoldenGlobe));
+		String salaryTag = Tool.toXMLTag("salary", String.valueOf(salary));
 		String personTag = Tool.toXMLTag("person", String.join("", firstNameTag, lastNameTag, 
-				genderTag, hasOscarTag, hasGoldenGlobeTag));
+				genderTag, salaryTag));
 		return personTag;
 	}
-
 }

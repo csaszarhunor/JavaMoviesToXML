@@ -2,16 +2,16 @@ package movies;
 import java.util.HashMap;
 import java.util.List;
 
-class Tool {
+public class Tool {
 
 	public static String toXMLTag(String tagName, String value){
-		String Tag = "<" + tagName + ">" + value + "</" + tagName + ">";
-		return Tag;
+		String tag = "<" + tagName + ">" + value + "</" + tagName + ">";
+		return tag;
 	}
 	
 	public static String toMoviesXML(String... moviesXMLs){
-		String xmlHeader = new String("<?xml version=\"1.0\"?>");
-		String content = new String("");
+		String xmlHeader = "<?xml version=\"1.0\"?>";
+		String content = "";
 		for (String movie: moviesXMLs){
 			content += movie;
 		}
@@ -22,7 +22,7 @@ class Tool {
 	public static HashMap<Person, Integer> countMoviesPerPerson(List<Movie> movies){
 		HashMap<Person, Integer> numberOfMoviesPerPerson = new HashMap<>();
 		for (Movie movie: movies){
-			for (Person person: movie.cast){
+			for (Person person: movie.getCast()){
 				if (numberOfMoviesPerPerson.containsKey(person)){
 					Integer number = numberOfMoviesPerPerson.get(person);
 					numberOfMoviesPerPerson.put(person, number + 1);
