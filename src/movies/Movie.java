@@ -73,23 +73,6 @@ public class Movie extends Product implements Buyable{
 		this.price = price;
 	}
 
-	String toXMLString(){
-		String titleTag = Tool.toXMLTag("title", this.title);
-		String genreTag = Tool.toXMLTag("genre", this.genre.toString());
-		String durationTag = Tool.toXMLTag("duration", String.valueOf(this.duration));
-		String rateTag = Tool.toXMLTag("rate", String.valueOf(this.rate));
-		String personsXMLs = "";
-		for (Person person: this.cast){
-			String personXML;
-			personXML = person.toXMLString();
-			personsXMLs += personXML;
-			}
-		String castTag = Tool.toXMLTag("cast", personsXMLs);
-		String movieTag = Tool.toXMLTag("movie", String.join("", titleTag, genreTag, 
-				durationTag, rateTag, castTag));
-		return movieTag;
-	}
-
 
 	@Override
 	public long getInvestment() {

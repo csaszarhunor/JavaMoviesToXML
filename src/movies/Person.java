@@ -55,13 +55,4 @@ public class Person {
 		this.salary = salary;
 	}
 
-	String toXMLString(){
-		String firstNameTag = Tool.toXMLTag("firstName", this.firstName);
-		String lastNameTag = Tool.toXMLTag("lastName", this.lastName);
-		String genderTag = Tool.toXMLTag("gender", this.gender.toString());
-		String salaryTag = Tool.toXMLTag("salary", String.valueOf(salary));
-		String personTag = Tool.toXMLTag("person", String.join("", firstNameTag, lastNameTag, 
-				genderTag, salaryTag));
-		return personTag;
-	}
 }
