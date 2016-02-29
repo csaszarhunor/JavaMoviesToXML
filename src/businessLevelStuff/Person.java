@@ -1,6 +1,8 @@
-package movies;
+package businessLevelStuff;
 
-public class Person {
+import java.io.Serializable;
+
+public class Person implements Serializable{
 	
 	private String firstName;
 	private String lastName;
@@ -55,4 +57,8 @@ public class Person {
 		this.salary = salary;
 	}
 
+	@Override
+	public String toString() {
+		return "First Name: " + firstName + " Last Name: " + lastName;
+	}
 }

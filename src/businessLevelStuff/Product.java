@@ -1,6 +1,8 @@
-package movies;
+package businessLevelStuff;
 
-public abstract class Product {
+import java.io.Serializable;
+
+public abstract class Product implements Serializable{
 	
 	protected String id;
 	protected String title;

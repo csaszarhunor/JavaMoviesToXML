@@ -1,4 +1,4 @@
-package movies;
+package businessLevelStuff;
 
 import java.util.List;
 
@@ -68,6 +68,11 @@ public class Game extends Product implements Buyable {
 			investment += person.getSalary();
 		}
 		return investment;
+	}
+	
+	@Override
+	public String toString() {
+		return "Game: " + title + " Price: " + price;
 	}
 
 	/*

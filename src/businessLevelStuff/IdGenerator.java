@@ -1,4 +1,4 @@
-package movies;
+package businessLevelStuff;
 
 import java.util.UUID;
 

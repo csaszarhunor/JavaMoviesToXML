@@ -1,6 +1,8 @@
-package movies;
+package businessLevelStuff;
 
-public class Book extends Product {
+import java.io.Serializable;
+
+public class Book extends Product implements Serializable{
 
 	private final String ID = IdGenerator.generate(this);
 	private Person author;
@@ -27,6 +29,11 @@ public class Book extends Product {
 		return (long) (author.getSalary());
 	}
 
+	@Override
+	public String toString() {
+		return "Book author: " + author + ": " + title;
+	}
+	
 	/*
 	@Override
 	public boolean equals(Object obj) {
