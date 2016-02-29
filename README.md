@@ -1,16 +1,18 @@
 Introduction
 ============
 
-This is a school project (www.codecool.com) for learning Java and practicing interfaces and abstract classes.
+This is a school project (www.codecool.com) for learning Java and practicing serialization and networking.
 
 
 Structure
 ====================================
 
 The application has an interface Buyable and an abstract class Product. Implemented and extended from these are the 
-following main classes: Movie, Game, Book and a forth one, not being the child of any of mentioned, Person. Apart from 
-these there are support classes: IdGenerator and two enumerations Gender and Genre. The main method is in the 
-RentManager class.
+following main classes: Movie, Game, Book and a forth one, not being the child of any of mentioned, Person.
+There are two main methods, one in RentManager the other one in ObjectServer. These two communicate with each other 
+through sockets, the ObjectServer having the ServerSocket. The RentManager can send and receive objects to ObjectServer
+to serialization and storing in a file. The ObjectServer can recieve and store and read serialized objects and send them 
+to RentManager.
 
 The Buyable interface has an abstract method, getPrice.
 The Product abstract class has the following attributes: id, title, renter (Person) and getTitle and getRenter methods.
