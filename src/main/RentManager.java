@@ -1,8 +1,10 @@
 package main;
 
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.io.OutputStream;
 import java.net.Socket;
 import java.util.ArrayList;
 import java.util.List;
@@ -11,8 +13,16 @@ import java.util.Scanner;
 import businessLevelStuff.*;
 
 public class RentManager {
-
-	public static void main(String[] args) throws ClassNotFoundException, IOException {
+	
+	static Socket s;
+	static OutputStream os;
+	static InputStream is;
+	static ObjectOutputStream oos;
+	static ObjectInputStream ois;
+	static final String ADDRESS = "localhost";
+	static final int PORT = 123;
+	
+	public static void main(String[] args){
 		
 		Person keanu = new Person("Keanu", "Reeves", Gender.MALE, 1100000);
 		Person carrie = new Person("Carrie-Anne", "Moss", Gender.FEMALE, 1000000);
@@ -57,23 +67,30 @@ public class RentManager {
 		forSale.add(farCry4ToSell);
 		
 		// Serialization, networking
+		// establishing connection
 		
-		Socket clientSocket = null;
-        ObjectOutputStream clientOutputSream = null;
-        ObjectInputStream clientInputStream = null;
+		try
+        {
+            s = new Socket(ADDRESS, PORT);
+            System.out.println("Connected to Server.");
 
-        try {
-            clientSocket = new Socket("localhost", 1123);
-            clientOutputSream = new ObjectOutputStream(clientSocket.getOutputStream());
-            clientInputStream = new ObjectInputStream(clientSocket.getInputStream());
-        } catch (IOException e) {
+            os = s.getOutputStream();
+            is = s.getInputStream();
+            oos = new ObjectOutputStream(os);
+            ois = new ObjectInputStream(is);
+			System.out.println("In and out streams established.");
+        }
+        catch (IOException e)
+        {
             e.printStackTrace();
         }
-        Scanner scanner = new Scanner(System.in);
+		
+		// interacting with server
+		
+		Scanner scanner = new Scanner(System.in);
         String userInput;
-        System.out.println("Client started, waiting for commands...");
-        while (true) {
-            try {
+		while(true){
+			try {
             	System.out.print("\n\t1. Order server to serialize objects." +
                         "\n\t2. Order server to fetch serialized objects." +
                         "\n\t0. Shutdown server and client." +
@@ -82,28 +99,28 @@ public class RentManager {
 
 
                 if (userInput.equals("1")) {
-                	clientOutputSream.writeObject(Command.PUT);
+                	oos.writeObject(Command.PUT);
 
-                    clientOutputSream.write(0);
-                    clientOutputSream.writeObject(keanu);
-                    clientOutputSream.write(0);
-                    clientOutputSream.writeObject(matrix);
-                    clientOutputSream.write(0);
-                    clientOutputSream.writeObject(witcher3);
-                    clientOutputSream.write(0);
-                    clientOutputSream.writeObject(oldManAndTheSea);
-                    clientOutputSream.write(0);
-                    clientOutputSream.writeObject(flowersForAlgernon);
+                	oos.write(0);
+                    oos.writeObject(keanu);
+                    oos.write(0);
+                    oos.writeObject(matrix);
+                    oos.write(0);
+                    oos.writeObject(witcher3);
+                    oos.write(0);
+                    oos.writeObject(oldManAndTheSea);
+                    oos.write(0);
+                    oos.writeObject(flowersForAlgernon);
                     System.out.println("Done.");
                 } else if (userInput.equals("2")) {
-                	clientOutputSream.writeObject(Command.GET);
-                    List<Object> results= new ArrayList<>();
-                    results = (List)clientInputStream.readObject();
-                    for (Object o:results){
+                	oos.writeObject(Command.GET);
+                    List<Object> objsToFetch= new ArrayList<>();
+                    objsToFetch = (List)ois.readObject();
+                    for (Object o:objsToFetch){
                         System.out.println(o);
                     }
                 } else if (userInput.equals("0")) {
-                    clientOutputSream.writeObject(Command.EXIT);
+                    oos.writeObject(Command.EXIT);
                     break;
                 }
 
@@ -112,21 +129,17 @@ public class RentManager {
                 e.printStackTrace();
             }
         }
-        try {
-            clientSocket.close();
-            clientOutputSream.close();
-            clientInputStream.close();
-            scanner.close();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-	}
-
-	public static int calculateExpectablePrice(List<Buyable> buyables){
-		int result = 0;
-		for (Buyable buyable : buyables) {
-			result += buyable.getPrice();
+		
+		try {
+			System.out.println("Client is shutting down...");
+			scanner.close();
+			os.close();
+			is.close();
+			oos.close();
+			ois.close();
+			s.close();
+		} catch (Exception e) {
+			e.printStackTrace();
 		}
-		return result;
 	}
 }
